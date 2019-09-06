@@ -128,13 +128,18 @@ class mppCommands:
             response = ""
             for x in (1, 2, 3, 4):
                 command_crc = command.full_command
-                cmd1 = command_crc[:8]
-                cmd2 = command_crc[8:]
-                time.sleep(0.35)
-                os.write(usb0, cmd1)
-                time.sleep(0.35)
-                os.write(usb0, cmd2)
-                time.sleep(0.25)
+
+                if len(command_crc) < 9:
+                    time.sleep(0.35)
+                    os.write(usb0, command_crc)
+                else:
+                    cmd1 = command_crc[:8]
+                    cmd2 = command_crc[8:]
+                    time.sleep(0.35)
+                    os.write(usb0, cmd1)
+                    time.sleep(0.35)
+                    os.write(usb0, cmd2)
+                    time.sleep(0.25)
 
                 while True:
                     time.sleep(0.15)
