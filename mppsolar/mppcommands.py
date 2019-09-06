@@ -148,6 +148,7 @@ class mppCommands:
                     if '\r' in r: break
 
             logging.debug('usb response was: %s and is valid', response_line, command.is_response_valid(response))
+            print(response)
             if command.is_response_valid(response):
                 command.set_response(response)
                 # return response without the start byte and the crc
