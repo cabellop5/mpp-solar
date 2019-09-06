@@ -10,6 +10,7 @@ import re
 import logging
 import json
 import glob
+import os
 # from pprint import pprint
 from os import path
 from argparse import ArgumentParser
@@ -122,6 +123,27 @@ class mppCommands:
             # print command.get_test_response()
             command.set_response(command.get_test_response())
             return command
+        if (self._serial_device == '/dev/hidraw0'):
+            usb0 = os.open('/dev/hidraw0', os.O_RDWR | os.O_NONBLOCK)
+            response = ""
+            for x in (1, 2, 3, 4):
+                command_crc = command.full_command
+                cmd1 = command_crc[:8]
+                cmd2 = command_crc[8:]
+                time.sleep(0.35)
+                os.write(usb0, cmd1)
+                time.sleep(0.35)
+                os.write(usb0, cmd2)
+                time.sleep(0.25)
+
+                while True:
+                    time.sleep(0.15)
+                    r = os.read(usb0, 256)
+                    response += r
+                    if '\r' in r: break
+
+            return response
+
         with serial.serial_for_url(self._serial_device, self._baud_rate) as s:
             # Execute command multiple times, increase timeouts each time
             for x in (1, 2, 3, 4):
