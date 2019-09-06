@@ -19,7 +19,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='mpp-solar',
+    name='py-mpp-solar',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -92,8 +92,8 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'mpp-solar=mppsolar:main',
-            'mpp-info-pub=mppsolar.mpp_info_pub:main',
+            'py-mpp-solar=mppsolar:main',
+            'py-mpp-info-pub=mppsolar.mpp_info_pub:main',
         ],
     },
 
