@@ -126,9 +126,9 @@ class mppCommand(object):
         # Check we got a CRC response that matches the data
         resp = response[:-3]
         resp_crc = response[-3:-1]
-        logging.debug('CRC resp\t%x %x', ord(resp_crc[0]), ord(resp_crc[1]))
+        print('CRC resp\t%x %x', ord(resp_crc[0]), ord(resp_crc[1]))
         calc_crc_h, calc_crc_l = crc(resp)
-        logging.debug('CRC calc\t%x %x', calc_crc_h, calc_crc_l)
+        print('CRC calc\t%x %x', calc_crc_h, calc_crc_l)
         if ((ord(resp_crc[0]) == calc_crc_h) and (ord(resp_crc[1]) == calc_crc_l)):
             logging.debug('CRCs match')
         else:
