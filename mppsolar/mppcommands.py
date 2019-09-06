@@ -194,7 +194,7 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--command', help='Command to run', default='QID')
     args = parser.parse_args()
 
-    logging.basicConfig(filename='mppsolar.log', level='DEBUG')
+    logging.basicConfig(filename='/var/www/py-mpp-solar/mppsolar.log', level='DEBUG')
 
     mp = mppCommands("TEST")
     cmd = mp.execute(args.command)
