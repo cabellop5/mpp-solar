@@ -195,13 +195,29 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--command', help='Command to run', default='QID')
     args = parser.parse_args()
 
-    logging.basicConfig(filename='/var/www/py-mpp-solar/mppsolar.log', level='DEBUG')
-
-    console = logging.StreamHandler()
-    console.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
-    console.setFormatter(formatter)
-    logging.getLogger('').addHandler(console)
+    logger = logging.getLogger('Mpp Logger')
+    logger.setLevel(logging.DEBUG)
+    # create file handler which logs even debug messages
+    fh = logging.FileHandler('/var/www/py-mpp-solar/mppsolar.log')
+    fh.setLevel(logging.DEBUG)
+    # create console handler with a higher log level
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+    # create formatter and add it to the handlers
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    ch.setFormatter(formatter)
+    fh.setFormatter(formatter)
+    # add the handlers to logger
+    logger.addHandler(ch)
+    logger.addHandler(fh)
+    #
+    # logging.basicConfig(filename='/var/www/py-mpp-solar/mppsolar.log', level='DEBUG')
+    #
+    # console = logging.StreamHandler()
+    # console.setLevel(logging.DEBUG)
+    # formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
+    # console.setFormatter(formatter)
+    # logging.getLogger('').addHandler(console)
 
     mp = mppCommands("TEST")
     cmd = mp.execute(args.command)
