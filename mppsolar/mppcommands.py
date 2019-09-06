@@ -196,6 +196,12 @@ if __name__ == '__main__':
 
     logging.basicConfig(filename='/var/www/py-mpp-solar/mppsolar.log', level='DEBUG')
 
+    console = logging.StreamHandler()
+    console.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
+    console.setFormatter(formatter)
+    logging.getLogger('').addHandler(console)
+
     mp = mppCommands("TEST")
     cmd = mp.execute(args.command)
     print("response: ", cmd.response)
