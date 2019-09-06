@@ -147,7 +147,13 @@ class mppCommands:
                     response += r
                     if '\r' in r: break
 
-            return response
+            if command.is_response_valid(response):
+                command.set_response(response)
+                # return response without the start byte and the crc
+                return command
+
+            logging.critical('Command execution failed')
+            return None
 
         with serial.serial_for_url(self._serial_device, self._baud_rate) as s:
             # Execute command multiple times, increase timeouts each time
